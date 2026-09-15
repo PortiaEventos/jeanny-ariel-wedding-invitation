@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f1e7">
+<title>Jeanny & Ariel · Wedding Invitation</title>
+<style>
+:root{--max:944px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#f7f1e7;font-family:Georgia,serif;-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+.invite{width:min(100%,var(--max));margin:0 auto;background:#f8f2e7;position:relative;overflow:hidden}
+.page{position:relative;width:100%;aspect-ratio:944/2048;overflow:hidden}
+.page>img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.layer{position:absolute;inset:0;pointer-events:none;opacity:0;will-change:transform,opacity,filter}
+.layer img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.layer.show{opacity:1}
+
+/* Different entrance families, all subtle */
+.fade-up{transform:translateY(18px);filter:blur(2px)}
+.fade-up.show{animation:fadeUp 1.0s cubic-bezier(.22,.61,.36,1) forwards}
+.fade-in{transform:scale(.985);filter:blur(1.5px)}
+.fade-in.show{animation:fadeIn 1.1s ease forwards}
+.soft-pop{transform:scale(.90);filter:blur(1.2px)}
+.soft-pop.show{animation:softPop 1.05s cubic-bezier(.16,1,.3,1) forwards}
+.slide-left{transform:translateX(-22px);filter:blur(1.5px)}
+.slide-left.show{animation:slideLeft 1.0s cubic-bezier(.22,.61,.36,1) forwards}
+.slide-right{transform:translateX(22px);filter:blur(1.5px)}
+.slide-right.show{animation:slideRight 1.0s cubic-bezier(.22,.61,.36,1) forwards}
+@keyframes fadeUp{to{opacity:1;transform:none;filter:none}}
+@keyframes fadeIn{to{opacity:1;transform:none;filter:none}}
+@keyframes softPop{to{opacity:1;transform:none;filter:none}}
+@keyframes slideLeft{to{opacity:1;transform:none;filter:none}}
+@keyframes slideRight{to{opacity:1;transform:none;filter:none}}
+
+/* clip helpers: each duplicate shows only a specific region of the transparent overlay */
+.clip-logo{clip-path:inset(2% 25% 84% 25%)}
+.clip-title{clip-path:inset(11% 10% 69% 10%)}
+.clip-mid1{clip-path:inset(20% 7% 59% 7%)}
+.clip-mid2{clip-path:inset(31% 7% 50% 7%)}
+.clip-mid3{clip-path:inset(42% 6% 39% 6%)}
+.clip-bottom1{clip-path:inset(72% 12% 17% 12%)}
+.clip-bottom2{clip-path:inset(82% 12% 8% 12%)}
+
+.p2-logo{clip-path:inset(3% 30% 84% 30%)}
+.p2-names{clip-path:inset(23% 18% 57% 18%)}
+.p2-date{clip-path:inset(39% 25% 45% 25%)}
+.p2-scroll{clip-path:inset(47% 18% 40% 18%)}
+
+.p3-head{clip-path:inset(0 0 79% 0)}
+.p3-intro{clip-path:inset(21% 0 69% 0)}
+.p3-date{clip-path:inset(31% 0 60% 0)}
+.p3-ceremony{clip-path:inset(40% 0 52% 0)}
+.p3-locationtext{clip-path:inset(48% 0 30% 0)}
+.p3-buttons{clip-path:inset(70% 0 0 0)}
+
+.p4-head{clip-path:inset(3% 15% 78% 15%)}
+.p4-women-text{clip-path:inset(20% 7% 62% 7%)}
+.p4-women-art{clip-path:inset(31% 17% 49% 17%)}
+.p4-women-btn{clip-path:inset(47% 20% 41% 20%)}
+.p4-men-text{clip-path:inset(55% 7% 30% 7%)}
+.p4-men-art{clip-path:inset(66% 17% 12% 17%)}
+.p4-men-btn{clip-path:inset(87% 20% 4% 20%)}
+
+.p5-head{clip-path:inset(5% 15% 73% 15%)}
+.p5-intro{clip-path:inset(25% 12% 59% 12%)}
+.p5-casa{clip-path:inset(36% 15% 48% 15%)}
+.p5-amazon{clip-path:inset(47% 15% 36% 15%)}
+.p5-adults{clip-path:inset(61% 15% 23% 15%)}
+
+/* clickable areas */
+.hotspot{position:absolute;z-index:30;display:block;border:0;background:transparent;border-radius:999px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#openBtn{left:28%;top:52%;width:44%;height:12%}
+#scroll-details{left:29%;top:45%;width:42%;height:8%}
+#location{left:31%;top:70.8%;width:38%;height:5.5%}
+#scroll-dress{left:28%;top:85%;width:44%;height:8%}
+#dress-women{left:31%;top:51.2%;width:38%;height:4.6%}
+#dress-men{left:29%;top:91.1%;width:42%;height:4.8%}
+#casa-cuesta{left:31%;top:40.2%;width:38%;height:4.7%}
+#amazon{left:31%;top:50.4%;width:38%;height:4.7%}
+
+/* Door opening */
+.cover{position:fixed;inset:0;z-index:100;background:#f7f1e7;display:block;overflow-x:hidden;overflow-y:auto;touch-action:manipulation}
+.cover-stage{position:relative;width:min(100%,var(--max));margin:0 auto;aspect-ratio:944/2048;overflow:hidden;background:#f8f2e7}
+.reveal-stack{position:absolute;inset:0;z-index:1;transform:scale(.94);opacity:.78;transition:transform 1.45s cubic-bezier(.22,.61,.36,1),opacity 1.1s ease}
+.reveal-stack img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cover.open .reveal-stack{transform:scale(1);opacity:1}
+.door-half{position:absolute;inset:0;z-index:3;overflow:hidden;will-change:transform,opacity;transition:transform 1.15s cubic-bezier(.65,0,.20,1),opacity .95s ease}
+.door-half img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.door-left{clip-path:inset(0 50% 0 0);transform-origin:left center}
+.door-right{clip-path:inset(0 0 0 50%);transform-origin:right center}
+.cover.open .door-left{transform:perspective(1200px) rotateY(-76deg) translateX(-14%);opacity:.18}
+.cover.open .door-right{transform:perspective(1200px) rotateY(76deg) translateX(14%);opacity:.18}
+.cover.done{opacity:0;pointer-events:none;transition:opacity .42s ease}
+
+/* music */
+.audio-toggle{position:fixed;right:max(12px,calc((100vw - var(--max))/2 + 12px));bottom:calc(14px + env(safe-area-inset-bottom));
+ z-index:90;width:40px;height:40px;border:1px solid rgba(49,91,157,.20);border-radius:50%;
+ background:rgba(250,246,238,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+ box-shadow:0 3px 14px rgba(0,0,0,.10);color:#315b9d;font-size:18px;display:none;align-items:center;justify-content:center;padding:0}
+.audio-toggle.show{display:flex}
+.audio-toggle:active{transform:scale(.96)}
+
+@media (prefers-reduced-motion:reduce){
+ .layer.show{animation-duration:.35s!important}
+}
+</style>
+</head>
+<body class="locked">
+
+<audio id="music" preload="auto" loop playsinline webkit-playsinline>
+  <source src="assets/musica.mp3" type="audio/mpeg">
+</audio>
+<button class="audio-toggle" id="audioToggle" aria-label="Mute music">♪</button>
+
+<div class="cover" id="cover">
+  <div class="cover-stage">
+    <div class="reveal-stack">
+      <img src="assets/02-fondo.png" alt="">
+      <img src="assets/02-texto.png" alt="">
+    </div>
+    <div class="door-half door-left"><img src="assets/01-portada-completa.png" alt=""></div>
+    <div class="door-half door-right"><img src="assets/01-portada-completa.png" alt=""></div>
+    <button class="hotspot" id="openBtn" aria-label="Tap to open"></button>
+  </div>
+</div>
+
+<main class="invite">
+
+  <section class="page" id="p2">
+    <img class="bg" src="assets/02-fondo.png" alt="">
+    <div class="layer p2-logo soft-pop"><img src="assets/02-texto.png" alt=""></div>
+    <div class="layer p2-names fade-up"><img src="assets/02-texto.png" alt=""></div>
+    <div class="layer p2-date fade-in"><img src="assets/02-texto.png" alt=""></div>
+    <div class="layer p2-scroll fade-up"><img src="assets/02-texto.png" alt=""></div>
+    <button class="hotspot" id="scroll-details" aria-label="Scroll to discover"></button>
+  </section>
+
+  <section class="page" id="p3">
+    <img class="bg" src="assets/03-fondo.png" alt="">
+    <div class="layer p3-head soft-pop"><img src="assets/03-texto.png" alt=""></div>
+    <div class="layer p3-intro fade-up"><img src="assets/03-texto.png" alt=""></div>
+    <div class="layer p3-date slide-left"><img src="assets/03-texto.png" alt=""></div>
+    <div class="layer p3-ceremony slide-right"><img src="assets/03-texto.png" alt=""></div>
+    <div class="layer p3-locationtext fade-up"><img src="assets/03-texto.png" alt=""></div>
+    <div class="layer p3-buttons fade-in"><img src="assets/03-texto.png" alt=""></div>
+    <a class="hotspot" id="location" href="https://maps.app.goo.gl/bXNYkKEkYui6yCsP8?g_st=ic" target="_blank" rel="noopener noreferrer" aria-label="View location"></a>
+    <button class="hotspot" id="scroll-dress" aria-label="Scroll to discover the details"></button>
+  </section>
+
+  <section class="page" id="p4">
+    <img class="bg" src="assets/04-fondo.png" alt="">
+    <div class="layer p4-head soft-pop"><img src="assets/04-texto.png" alt=""></div>
+    <div class="layer p4-women-text fade-up"><img src="assets/04-texto.png" alt=""></div>
+    <div class="layer p4-women-art slide-left"><img src="assets/04-texto.png" alt=""></div>
+    <div class="layer p4-women-btn fade-in"><img src="assets/04-texto.png" alt=""></div>
+    <div class="layer p4-men-text fade-up"><img src="assets/04-texto.png" alt=""></div>
+    <div class="layer p4-men-art slide-right"><img src="assets/04-texto.png" alt=""></div>
+    <div class="layer p4-men-btn fade-in"><img src="assets/04-texto.png" alt=""></div>
+    <a class="hotspot" id="dress-women" href="https://www.pinterest.com/turtle_uv94/code-dress-girls/?invite_code=2acb87ba884a4c9c999840964b3e6c9f&sender=549931941906887975" target="_blank" rel="noopener noreferrer"></a>
+    <a class="hotspot" id="dress-men" href="https://www.pinterest.com/turtle_uv94/code-dress-boys/?invite_code=ddfad047927e46b4bc0679652ee8c017&sender=549931941906887975" target="_blank" rel="noopener noreferrer"></a>
+  </section>
+
+  <section class="page" id="p5">
+    <img class="bg" src="assets/05-fondo.png" alt="">
+    <div class="layer p5-head soft-pop"><img src="assets/05-texto.png" alt=""></div>
+    <div class="layer p5-intro fade-up"><img src="assets/05-texto.png" alt=""></div>
+    <div class="layer p5-casa slide-left"><img src="assets/05-texto.png" alt=""></div>
+    <div class="layer p5-amazon slide-right"><img src="assets/05-texto.png" alt=""></div>
+    <div class="layer p5-adults fade-up"><img src="assets/05-texto.png" alt=""></div>
+    <a class="hotspot" id="casa-cuesta" href="https://listaderegalos.casacuesta.com/Event/Jeanny-Ariel?utm_source=share" target="_blank" rel="noopener noreferrer"></a>
+    <a class="hotspot" id="amazon" href="https://www.amazon.com/wedding/guest-view/SKL6AKIKFPXG" target="_blank" rel="noopener noreferrer"></a>
+  </section>
+
+</main>
+
+<script>
+const cover = document.getElementById('cover');
+const openBtn = document.getElementById('openBtn');
+const music = document.getElementById('music');
+const audioToggle = document.getElementById('audioToggle');
+let opened = false;
+let musicOn = false;
+
+music.volume = 0.48;
+
+/* IMPORTANT FOR MOBILE:
+   audio playback is called synchronously inside the user's pointer/click gesture. */
+function startAudioFromGesture(){
+  try{
+    music.muted = false;
+    const p = music.play();
+    if(p && typeof p.then === 'function'){
+      p.then(()=>{musicOn=true; audioToggle.textContent='♪';})
+       .catch(()=>{musicOn=false; audioToggle.textContent='♩';});
+    }else{
+      musicOn = true;
+    }
+  }catch(e){
+    musicOn = false;
+  }
+  audioToggle.classList.add('show');
+}
+
+function revealPage2(){
+  const els = document.querySelectorAll('#p2 .layer');
+  const delays = [0,180,400,650];
+  els.forEach((el,i)=>setTimeout(()=>el.classList.add('show'),delays[i]||0));
+}
+
+function openInvitation(ev){
+  if(opened) return;
+  opened = true;
+  startAudioFromGesture();   // must happen immediately on mobile
+  cover.classList.add('open');
+
+  setTimeout(()=>{
+    document.body.classList.remove('locked');
+    window.scrollTo(0,0);
+    revealPage2();
+    cover.classList.add('done');
+    setTimeout(()=>cover.remove(),450);
+  },1350);
+}
+
+/* pointerup works more reliably across iPhone/Android touch browsers */
+openBtn.addEventListener('pointerup', openInvitation, {passive:true});
+cover.addEventListener('pointerup', (e)=>{
+  if(e.target===cover || e.target.classList.contains('cover-stage')) openInvitation(e);
+}, {passive:true});
+
+audioToggle.addEventListener('pointerup', ()=>{
+  if(music.paused){
+    music.muted=false;
+    music.play().then(()=>{musicOn=true;audioToggle.textContent='♪';}).catch(()=>{});
+  }else{
+    music.muted=!music.muted;
+    musicOn=!music.muted;
+    audioToggle.textContent=music.muted?'♩':'♪';
+  }
+});
+
+document.getElementById('scroll-details').addEventListener('click',()=>document.getElementById('p3').scrollIntoView({behavior:'smooth'}));
+document.getElementById('scroll-dress').addEventListener('click',()=>document.getElementById('p4').scrollIntoView({behavior:'smooth'}));
+
+/* Mobile-safe scroll reveal */
+const sections = [...document.querySelectorAll('#p3,#p4,#p5')];
+const sectionLayers = new Map(sections.map(s=>[s,[...s.querySelectorAll('.layer')]]));
+
+function showSection(section){
+  if(section.dataset.shown) return;
+  section.dataset.shown='1';
+  const layers = sectionLayers.get(section);
+  layers.forEach((el,i)=>setTimeout(()=>el.classList.add('show'), i*170));
+}
+
+if('IntersectionObserver' in window){
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) showSection(entry.target);
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+  sections.forEach(s=>io.observe(s));
+}else{
+  /* fallback for older mobile browsers */
+  const fallback = ()=>{
+    sections.forEach(s=>{
+      const r=s.getBoundingClientRect();
+      if(r.top < innerHeight*.90 && r.bottom > 0) showSection(s);
+    });
+  };
+  addEventListener('scroll',fallback,{passive:true});
+  fallback();
+}
+</script>
+</body>
+</html>
