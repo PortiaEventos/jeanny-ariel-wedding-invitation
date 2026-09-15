@@ -21,6 +21,7 @@ body.locked{overflow:hidden}
 .page>img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .layer{position:absolute;inset:0;pointer-events:none;opacity:0;will-change:transform,opacity,filter}
 .layer img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#p2 .layer.no-shake{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}
 .layer.show{opacity:1}
 
 /* Different entrance families, all subtle */
@@ -74,6 +75,12 @@ body.locked{overflow:hidden}
 .p5-casa{clip-path:inset(36% 15% 48% 15%)}
 .p5-amazon{clip-path:inset(47% 15% 36% 15%)}
 .p5-adults{clip-path:inset(61% 15% 23% 15%)}
+
+/* V24 effect from page 3 onward: one soft reveal for the complete text/art overlay.
+   V32 clean backgrounds and full-page dimensions remain unchanged, so nothing is clipped. */
+.v24-reveal{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:.18;transform:translateY(18px) scale(.992);filter:blur(1.5px);transition:opacity 1.05s ease,transform 1.2s cubic-bezier(.2,.7,.25,1),filter .8s ease;will-change:opacity,transform,filter}
+.v24-reveal img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v24-reveal.show{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
 
 /* clickable areas */
 .hotspot{position:absolute;z-index:30;display:block;border:0;background:transparent;border-radius:999px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -145,38 +152,23 @@ body.locked{overflow:hidden}
 
   <section class="page" id="p3">
     <img class="bg" src="assets/03-fondo.png" alt="">
-    <div class="layer p3-head soft-pop"><img src="assets/03-texto.png" alt=""></div>
-    <div class="layer p3-intro fade-up"><img src="assets/03-texto.png" alt=""></div>
-    <div class="layer p3-date slide-left"><img src="assets/03-texto.png" alt=""></div>
-    <div class="layer p3-ceremony slide-right"><img src="assets/03-texto.png" alt=""></div>
-    <div class="layer p3-locationtext fade-up"><img src="assets/03-texto.png" alt=""></div>
-    <div class="layer p3-buttons fade-in"><img src="assets/03-texto.png" alt=""></div>
-    <a class="hotspot" id="location" href="https://maps.app.goo.gl/bXNYkKEkYui6yCsP8?g_st=ic" target="_blank" rel="noopener noreferrer" aria-label="View location"></a>
+    <div class="v24-reveal"><img src="assets/03-texto.png" alt=""></div>
+    <a class="hotspot" id="location" href="https://maps.app.goo.gl/bXNYkKEkYui6yCsP8?g_st=ic" target="_blank" rel="noopener noreferrer" aria-label="View Location"></a>
     <button class="hotspot" id="scroll-dress" aria-label="Scroll to discover the details"></button>
   </section>
 
   <section class="page" id="p4">
     <img class="bg" src="assets/04-fondo.png" alt="">
-    <div class="layer p4-head soft-pop"><img src="assets/04-texto.png" alt=""></div>
-    <div class="layer p4-women-text fade-up"><img src="assets/04-texto.png" alt=""></div>
-    <div class="layer p4-women-art slide-left"><img src="assets/04-texto.png" alt=""></div>
-    <div class="layer p4-women-btn fade-in"><img src="assets/04-texto.png" alt=""></div>
-    <div class="layer p4-men-text fade-up"><img src="assets/04-texto.png" alt=""></div>
-    <div class="layer p4-men-art slide-right"><img src="assets/04-texto.png" alt=""></div>
-    <div class="layer p4-men-btn fade-in"><img src="assets/04-texto.png" alt=""></div>
-    <a class="hotspot" id="dress-women" href="https://www.pinterest.com/turtle_uv94/code-dress-girls/?invite_code=2acb87ba884a4c9c999840964b3e6c9f&sender=549931941906887975" target="_blank" rel="noopener noreferrer"></a>
-    <a class="hotspot" id="dress-men" href="https://www.pinterest.com/turtle_uv94/code-dress-boys/?invite_code=ddfad047927e46b4bc0679652ee8c017&sender=549931941906887975" target="_blank" rel="noopener noreferrer"></a>
+    <div class="v24-reveal"><img src="assets/04-texto.png" alt=""></div>
+    <a class="hotspot" id="dress-women" href="https://www.pinterest.com/turtle_uv94/code-dress-girls/?invite_code=2acb87ba884a4c9c999840964b3e6c9f&sender=549931941906887975" target="_blank" rel="noopener noreferrer" aria-label="View inspiration for her"></a>
+    <a class="hotspot" id="dress-men" href="https://www.pinterest.com/turtle_uv94/code-dress-boys/?invite_code=ddfad047927e46b4bc0679652ee8c017&sender=549931941906887975" target="_blank" rel="noopener noreferrer" aria-label="View inspiration for him"></a>
   </section>
 
   <section class="page" id="p5">
     <img class="bg" src="assets/05-fondo.png" alt="">
-    <div class="layer p5-head soft-pop"><img src="assets/05-texto.png" alt=""></div>
-    <div class="layer p5-intro fade-up"><img src="assets/05-texto.png" alt=""></div>
-    <div class="layer p5-casa slide-left"><img src="assets/05-texto.png" alt=""></div>
-    <div class="layer p5-amazon slide-right"><img src="assets/05-texto.png" alt=""></div>
-    <div class="layer p5-adults fade-up"><img src="assets/05-texto.png" alt=""></div>
-    <a class="hotspot" id="casa-cuesta" href="https://listaderegalos.casacuesta.com/Event/Jeanny-Ariel?utm_source=share" target="_blank" rel="noopener noreferrer"></a>
-    <a class="hotspot" id="amazon" href="https://www.amazon.com/wedding/guest-view/SKL6AKIKFPXG" target="_blank" rel="noopener noreferrer"></a>
+    <div class="v24-reveal"><img src="assets/05-texto.png" alt=""></div>
+    <a class="hotspot" id="casa-cuesta" href="https://listaderegalos.casacuesta.com/Event/Jeanny-Ariel?utm_source=share" target="_blank" rel="noopener noreferrer" aria-label="View Casa Cuesta registry"></a>
+    <a class="hotspot" id="amazon" href="https://www.amazon.com/wedding/guest-view/SKL6AKIKFPXG" target="_blank" rel="noopener noreferrer" aria-label="View Amazon registry"></a>
   </section>
 
 </main>
@@ -210,9 +202,8 @@ function startAudioFromGesture(){
 }
 
 function revealPage2(){
-  const els = document.querySelectorAll('#p2 .layer');
-  const delays = [0,180,400,650];
-  els.forEach((el,i)=>setTimeout(()=>el.classList.add('show'),delays[i]||0));
+  /* Keep Page 2 static after the doors finish opening: same opening, no post-open shake. */
+  document.querySelectorAll('#p2 .layer').forEach(el=>el.classList.add('no-shake'));
 }
 
 function openInvitation(ev){
@@ -250,32 +241,27 @@ audioToggle.addEventListener('pointerup', ()=>{
 document.getElementById('scroll-details').addEventListener('click',()=>document.getElementById('p3').scrollIntoView({behavior:'smooth'}));
 document.getElementById('scroll-dress').addEventListener('click',()=>document.getElementById('p4').scrollIntoView({behavior:'smooth'}));
 
-/* Mobile-safe scroll reveal */
+/* V24 reveal behavior from page 3 onward */
 const sections = [...document.querySelectorAll('#p3,#p4,#p5')];
-const sectionLayers = new Map(sections.map(s=>[s,[...s.querySelectorAll('.layer')]]));
-
 function showSection(section){
   if(section.dataset.shown) return;
   section.dataset.shown='1';
-  const layers = sectionLayers.get(section);
-  layers.forEach((el,i)=>setTimeout(()=>el.classList.add('show'), i*170));
+  const overlay=section.querySelector('.v24-reveal');
+  if(overlay) overlay.classList.add('show');
 }
 
 if('IntersectionObserver' in window){
   const io = new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
-      if(entry.isIntersecting) showSection(entry.target);
+      if(entry.isIntersecting){ showSection(entry.target); io.unobserve(entry.target); }
     });
-  }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+  }, {threshold:0.16, rootMargin:'0px 0px -8% 0px'});
   sections.forEach(s=>io.observe(s));
 }else{
-  /* fallback for older mobile browsers */
-  const fallback = ()=>{
-    sections.forEach(s=>{
-      const r=s.getBoundingClientRect();
-      if(r.top < innerHeight*.90 && r.bottom > 0) showSection(s);
-    });
-  };
+  const fallback=()=>sections.forEach(s=>{
+    const r=s.getBoundingClientRect();
+    if(r.top<innerHeight*.92 && r.bottom>0) showSection(s);
+  });
   addEventListener('scroll',fallback,{passive:true});
   fallback();
 }
